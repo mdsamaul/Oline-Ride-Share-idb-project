@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Oline_Ride_Share_idb_project.Server.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+var cString = builder.Configuration.GetConnectionString("vehicleApp");
+builder.Services.AddDbContext<DatabaseDbContext>(opt => { opt.UseSqlServer(cString); });
 var app = builder.Build();
 
 app.UseDefaultFiles();

@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Ride_Sharing_Project_isdb_bisew.Models;
 
 namespace Oline_Ride_Share_idb_project.Server.Model
 {
-    public class RideTrack
+    public class RideTrack : BaseEntity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RideTrackId { get; set; }
