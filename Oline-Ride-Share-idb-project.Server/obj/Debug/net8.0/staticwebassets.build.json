@@ -1,0 +1,24 @@
+{
+  "Version": 1,
+  "Hash": "IdM90+6HaLw+WSsP2Lox6l52Za/cHr3ZZviRgGLfbzE=",
+  "Source": "Oline-Ride-Share-idb-project.Server",
+  "BasePath": "_content/Oline-Ride-Share-idb-project.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\oline-ride-share-idb-project.client\\oline-ride-share-idb-project.client.esproj",
+      "Version": 2,
+      "Source": "oline-ride-share-idb-project.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

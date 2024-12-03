@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Oline-Ride-Share-idb-project.Server.props" />
+</Project>
