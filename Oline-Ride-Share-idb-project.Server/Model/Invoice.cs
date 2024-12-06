@@ -17,9 +17,6 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         [ForeignKey("PaymentMethod")]
         public int PaymentMethodId { get; set; }
         public virtual PaymentMethod? PaymentMethods { get; set; }
-        //[ForeignKey("RideBook")]
-        //public int RideBookId { get; set; }
-        //public virtual RideBook? RideBooks { get; set; }
         public virtual ICollection<Payment>? Payments { get; set; }
     }
 

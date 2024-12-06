@@ -19,5 +19,4 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public virtual VehicleType? VehicleTypes { get; set; }
         public virtual ICollection<DriverVehicle>? DriverVehicles { get; set; }
     }
-
 }
