@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "kthYrPkRHEfg4Lm5yVwmF7gBdDFxzXelc5tS7M4vqUk=",
+  "Hash": "IdM90+6HaLw+WSsP2Lox6l52Za/cHr3ZZviRgGLfbzE=",
   "Source": "Oline-Ride-Share-idb-project.Server",
   "BasePath": "_content/Oline-Ride-Share-idb-project.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "E:\\samaul\\git\\Oline-Ride-Share-idb-project\\oline-ride-share-idb-project.client\\oline-ride-share-idb-project.client.esproj",
+      "Identity": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\oline-ride-share-idb-project.client\\oline-ride-share-idb-project.client.esproj",
       "Version": 2,
       "Source": "oline-ride-share-idb-project.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
