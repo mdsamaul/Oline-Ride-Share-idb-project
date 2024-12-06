@@ -4,15 +4,22 @@ using Oline_Ride_Share_idb_project.Server.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Register IHttpClientFactory
+builder.Services.AddHttpClient();
+
+// Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add database context with connection string
 var cString = builder.Configuration.GetConnectionString("vehicleApp");
 builder.Services.AddDbContext<DatabaseDbContext>(opt => { opt.UseSqlServer(cString); });
+
 var app = builder.Build();
 
+// Serve static files
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
@@ -24,11 +31,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
+// Fallback for SPA routing
 app.MapFallbackToFile("/index.html");
 
 app.Run();
