@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ride_Sharing_Project_isdb_bisew.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Oline_Ride_Share_idb_project.Server.Model
 {
-    public class VehicleType
+    public class VehicleType : BaseEntity
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VehicleTypeId { get; set; }

@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ride_Sharing_Project_isdb_bisew.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Oline_Ride_Share_idb_project.Server.Model
 {
-    public class Customer
+    public class Customer : BaseEntity
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
         public string? CustomerName { get; set; }
         public required string CustomerPhoneNumber { get; set; }
