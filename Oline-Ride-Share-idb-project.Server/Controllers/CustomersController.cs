@@ -25,7 +25,11 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
             // If latitude or longitude is not provided, fetch it using IP Geolocation API
+<<<<<<< HEAD
             if (customer.CustomerLatitude == 0 && customer.CustomerLongitude == 0)
+=======
+            if (customer.CustomerLaitude == 0 && customer.CustomerLongitude == 0)
+>>>>>>> 59ad6d4544f47f00f5b8c1b8726896d593a07457
             {
                 var client = _httpClientFactory.CreateClient();
 
@@ -39,7 +43,11 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     var geoData = JsonConvert.DeserializeObject<GeoLocationResponse>(response);
 
                     // Set the latitude and longitude from the API response
+<<<<<<< HEAD
                     customer.CustomerLatitude = geoData.Latitude;
+=======
+                    customer.CustomerLaitude = geoData.Latitude;
+>>>>>>> 59ad6d4544f47f00f5b8c1b8726896d593a07457
                     customer.CustomerLongitude = geoData.Longitude;
                 }
                 catch (Exception ex)
