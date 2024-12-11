@@ -1,2 +1,9 @@
 .vs/
 .gitattributes/
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.json
