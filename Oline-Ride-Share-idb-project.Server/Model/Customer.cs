@@ -13,7 +13,7 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public string? CustomerEmail { get; set; }
         public required string CustomerNID { get; set; }
         public string? CustomerImage { get; set; }
-        public float CustomerLaitude { get; set; }
+        public float CustomerLatitude { get; set; }
         public float CustomerLongitude { get; set; }
         public virtual ICollection<Chat>? Chats { get; set; }
         public virtual ICollection<Invoice>? Invoices { get; set; }

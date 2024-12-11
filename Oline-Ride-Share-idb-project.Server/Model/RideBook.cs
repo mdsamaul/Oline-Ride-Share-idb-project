@@ -17,7 +17,7 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public float SourceLaitude { get; set; }
         public float SourceLongtiude { get; set; }
         public float DestinationLatitude { get; set; }
-        public float DestinationLongtiude { get; set; }
+        public float DestinationLongitude { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public decimal TotalFare { get; set; }

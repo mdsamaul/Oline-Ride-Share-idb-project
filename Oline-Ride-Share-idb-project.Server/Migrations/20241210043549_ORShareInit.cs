@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class VehcicleInit : Migration
+    public partial class ORShareInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,7 +43,7 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerNID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerLaitude = table.Column<float>(type: "real", nullable: false),
+                    CustomerLatitude = table.Column<float>(type: "real", nullable: false),
                     CustomerLongitude = table.Column<float>(type: "real", nullable: false),
                     CreateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -367,7 +367,7 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     SourceLaitude = table.Column<float>(type: "real", nullable: false),
                     SourceLongtiude = table.Column<float>(type: "real", nullable: false),
                     DestinationLatitude = table.Column<float>(type: "real", nullable: false),
-                    DestinationLongtiude = table.Column<float>(type: "real", nullable: false),
+                    DestinationLongitude = table.Column<float>(type: "real", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalFare = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -405,10 +405,10 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     RideTrackId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RideBookId = table.Column<int>(type: "int", nullable: false),
-                    RideTrackLaitude = table.Column<float>(type: "real", nullable: false),
-                    RideTrackLongtiude = table.Column<float>(type: "real", nullable: false),
+                    RideTrackLatitude = table.Column<float>(type: "real", nullable: false),
+                    RideTrackLongitude = table.Column<float>(type: "real", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Distance = table.Column<int>(type: "int", nullable: false),
+                    Distance = table.Column<float>(type: "real", nullable: false),
                     TrackTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),

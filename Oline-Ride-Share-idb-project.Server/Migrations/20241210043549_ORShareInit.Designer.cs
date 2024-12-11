@@ -12,8 +12,8 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    [Migration("20241203191727_VehcicleInit")]
-    partial class VehcicleInit
+    [Migration("20241210043549_ORShareInit")]
+    partial class ORShareInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,7 +178,7 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<string>("CustomerImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("CustomerLaitude")
+                    b.Property<float>("CustomerLatitude")
                         .HasColumnType("real");
 
                     b.Property<float>("CustomerLongitude")
@@ -530,7 +530,7 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<float>("DestinationLatitude")
                         .HasColumnType("real");
 
-                    b.Property<float>("DestinationLongtiude")
+                    b.Property<float>("DestinationLongitude")
                         .HasColumnType("real");
 
                     b.Property<float>("DistanceInMeter")
@@ -592,8 +592,8 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Distance")
-                        .HasColumnType("int");
+                    b.Property<float>("Distance")
+                        .HasColumnType("real");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -601,10 +601,10 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<int>("RideBookId")
                         .HasColumnType("int");
 
-                    b.Property<float>("RideTrackLaitude")
+                    b.Property<float>("RideTrackLatitude")
                         .HasColumnType("real");
 
-                    b.Property<float>("RideTrackLongtiude")
+                    b.Property<float>("RideTrackLongitude")
                         .HasColumnType("real");
 
                     b.Property<DateTime>("Timestamp")
