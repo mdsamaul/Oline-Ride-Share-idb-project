@@ -11,10 +11,10 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         [ForeignKey("RideBook")]
         public int RideBookId { get; set; }
         public virtual RideBook? RideBooks { get; set; }
-        public float RideTrackLaitude { get; set; }
-        public float RideTrackLongtiude { get; set; }
+        public float RideTrackLatitude { get; set; }
+        public float RideTrackLongitude { get; set; }
         public DateTime Timestamp { get; set; }
-        public int Distance { get; set; }
+        public float Distance { get; set; }
         public DateTime TrackTime { get; set; }
     }
 }
