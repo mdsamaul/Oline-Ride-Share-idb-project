@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Model;
 using Oline_Ride_Share_idb_project.Server.Data;
@@ -25,7 +25,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
             // If latitude or longitude is not provided, fetch it using IP Geolocation API
-            if (customer.CustomerLaitude == 0 && customer.CustomerLongitude == 0)
+            if (customer.CustomerLatitude == 0 && customer.CustomerLongitude == 0)
             {
                 var client = _httpClientFactory.CreateClient();
 

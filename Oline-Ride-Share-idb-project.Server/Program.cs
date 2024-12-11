@@ -3,11 +3,7 @@ using Oline_Ride_Share_idb_project.Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-<<<<<<< HEAD
-// Register the necessary services.
-=======
 // Add services to the container.
->>>>>>> 59ad6d4544f47f00f5b8c1b8726896d593a07457
 builder.Services.AddControllers();
 
 // Register IHttpClientFactory
