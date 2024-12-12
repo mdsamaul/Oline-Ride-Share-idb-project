@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Oline_Ride_Share_idb_project.Server.Data;
 using Oline_Ride_Share_idb_project.Server.Model;
@@ -53,7 +54,7 @@ public class RideBooksController : ControllerBase
             SourceLaitude = rideBookVm.SourceLaitude,
             SourceLongtiude = rideBookVm.SourceLongtiude,
             DestinationLatitude = rideBookVm.DestinationLatitude,
-            DestinationLongtiude = rideBookVm.DestinationLongtiude,
+            DestinationLongitude = rideBookVm.DestinationLongtiude,
             StartTime = rideBookVm.StartTime,
             EndTime = rideBookVm.EndTime,
             TotalFare = rideBookVm.TotalFare,

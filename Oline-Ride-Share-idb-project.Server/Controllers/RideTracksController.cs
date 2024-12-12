@@ -1,8 +1,12 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Data;
 using Oline_Ride_Share_idb_project.Server.Model;
->>>>>>> 59ad6d4544f47f00f5b8c1b8726896d593a07457
+using Oline_Ride_Share_idb_project.Server.Utilities;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Oline_Ride_Share_idb_project.Server.Controllers
 {

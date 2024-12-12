@@ -292,8 +292,6 @@ D:\course\idb-project\Angular\Oline-Ride-Share-idb-project\Oline-Ride-Share-idb-
 D:\course\idb-project\Angular\Oline-Ride-Share-idb-project\Oline-Ride-Share-idb-project.Server\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
 D:\course\idb-project\Angular\Oline-Ride-Share-idb-project\Oline-Ride-Share-idb-project.Server\obj\Debug\net8.0\Oline-Ride-Share-idb-project.Server.RazorAssemblyInfo.cache
 D:\course\idb-project\Angular\Oline-Ride-Share-idb-project\Oline-Ride-Share-idb-project.Server\obj\Debug\net8.0\Oline-Ride-Share-idb-project.Server.RazorAssemblyInfo.cs
-<<<<<<< HEAD
-=======
 =======
 E:\samaul\git\Oline-Ride-Share-idb-project\Oline-Ride-Share-idb-project.Server\bin\Debug\net8.0\appsettings.Development.json
 E:\samaul\git\Oline-Ride-Share-idb-project\Oline-Ride-Share-idb-project.Server\bin\Debug\net8.0\appsettings.json
