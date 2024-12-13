@@ -23,7 +23,6 @@ TestResults.xml
 bin/
 obj/
 *.dll
-*.exe
 *.pdb
 *.cache
 *.json

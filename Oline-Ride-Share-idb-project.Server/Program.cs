@@ -6,13 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Register IHttpClientFactory
-builder.Services.AddHttpClient();
-
-// Configure Swagger/OpenAPI
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 // Add database context with connection string
 var cString = builder.Configuration.GetConnectionString("vehicleApp");
 builder.Services.AddDbContext<DatabaseDbContext>(opt => { opt.UseSqlServer(cString); });
