@@ -3,7 +3,7 @@ using Oline_Ride_Share_idb_project.Server.Model;
 
 namespace Oline_Ride_Share_idb_project.Server.Data
 {
-    public class DatabaseDbContext: DbContext
+    public class DatabaseDbContext : DbContext
     {
         public DatabaseDbContext(DbContextOptions<DatabaseDbContext> options):base(options) { }
         public virtual DbSet<VehicleType>? VehicleTypes{ get; set; }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Oline-Ride-Share-idb-project.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9d0aaa3295a08c211e85b10e67804a560d4eaa5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6c10c1817d3fbbc054e92d5a5a10838a8aa8e60")]
 [assembly: System.Reflection.AssemblyProductAttribute("Oline-Ride-Share-idb-project.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Oline-Ride-Share-idb-project.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
