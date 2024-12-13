@@ -1,2 +1,0 @@
-E:\samaul\git\Oline-Ride-Share-idb-project\oline-ride-share-idb-project.client\obj\Debug\oline-ride-share-idb-project.client.esproj.CoreCompileInputs.cache
-D:\course\idb-project\Angular\Oline-Ride-Share-idb-project\oline-ride-share-idb-project.client\obj\Debug\oline-ride-share-idb-project.client.esproj.CoreCompileInputs.cache
