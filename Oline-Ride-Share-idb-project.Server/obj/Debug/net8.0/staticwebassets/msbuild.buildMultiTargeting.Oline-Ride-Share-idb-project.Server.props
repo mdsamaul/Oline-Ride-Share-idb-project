@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Oline-Ride-Share-idb-project.Server.props" />
+</Project>
