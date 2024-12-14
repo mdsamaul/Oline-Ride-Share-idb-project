@@ -1,0 +1,6 @@
+@Oline_Ride_Share_idb_project.Server_HostAddress = http://localhost:5193
+
+GET {{Oline_Ride_Share_idb_project.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
