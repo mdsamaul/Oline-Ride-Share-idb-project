@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:50242",
+"RedirectUrl": "",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\..\\oline-ride-share-idb-project.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}
