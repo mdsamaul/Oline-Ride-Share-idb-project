@@ -12,8 +12,8 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    [Migration("20241215054847_MigrationName")]
-    partial class MigrationName
+    [Migration("20241216110835_UpdateRideTrackModel")]
+    partial class UpdateRideTrackModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -618,6 +618,9 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
 
                     b.Property<float>("RideTrackLongitude")
                         .HasColumnType("real");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");

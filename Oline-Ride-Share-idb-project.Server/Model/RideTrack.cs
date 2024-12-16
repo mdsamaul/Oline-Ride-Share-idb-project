@@ -16,6 +16,7 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public DateTime Timestamp { get; set; }
         public int Distance { get; set; }
         public DateTime TrackTime { get; set; }
+        public bool Status { get; set; }
     }
 
 }

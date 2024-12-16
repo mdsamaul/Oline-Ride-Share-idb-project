@@ -12,8 +12,8 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    [Migration("20241215012944_AddMacAddressUpdateCreateByandDate")]
-    partial class AddMacAddressUpdateCreateByandDate
+    [Migration("20241216073911_ORSProjectInit")]
+    partial class ORSProjectInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -249,7 +249,13 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FcmToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")
