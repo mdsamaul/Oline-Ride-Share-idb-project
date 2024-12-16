@@ -616,6 +616,9 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<float>("RideTrackLongitude")
                         .HasColumnType("real");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
