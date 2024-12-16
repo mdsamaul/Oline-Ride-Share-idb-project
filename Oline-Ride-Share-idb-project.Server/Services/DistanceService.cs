@@ -28,7 +28,7 @@ namespace Oline_Ride_Share_idb_project.Server.Services
             double distanceKm = EarthRadiusKm * c;
 
             // Convert to meters
-            double distanceMeters = distanceKm * 1000;
+            //double distanceMeters = distanceKm * 1000;
 
             //return (float)distanceMeters;  // Return distance in meters
             return distanceKm;
