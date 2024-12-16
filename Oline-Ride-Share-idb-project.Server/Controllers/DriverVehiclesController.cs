@@ -25,6 +25,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DriverVehicle>>> GetDriverVehicles()
         {
+            // Retrieves all DriverVehicle records asynchronously
             return await _context.DriverVehicles.ToListAsync();
         }
 
@@ -43,7 +44,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         }
 
         // PUT: api/DriverVehicles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDriverVehicle(int id, DriverVehicle driverVehicle)
         {
@@ -52,35 +52,58 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(driverVehicle).State = EntityState.Modified;
+            // Find existing DriverVehicle
+            var exDriverVehicle = await _context.DriverVehicles.FindAsync(id);
+            if (exDriverVehicle == null)
+            {
+                return NotFound("DriverVehicle not found");
+            }
+
+            // Update only the relevant fields
+            exDriverVehicle.DriverId = driverVehicle.DriverId;
+            exDriverVehicle.VehicleId = driverVehicle.VehicleId;
+
+            // Set the updated information (like timestamp)
+            exDriverVehicle.SetUpdateInfo();
+
+            // Mark the entity state as modified for the update operation
+            _context.Entry(exDriverVehicle).State = EntityState.Modified;
 
             try
             {
+                // Save the changes to the database asynchronously
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
+                // If the entity does not exist in the database anymore, return a NotFound response
                 if (!DriverVehicleExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    throw; // Rethrow the exception if something else goes wrong
                 }
             }
 
-            return NoContent();
+            return NoContent(); // Return status code 204 for successful update
         }
 
         // POST: api/DriverVehicles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<DriverVehicle>> PostDriverVehicle(DriverVehicle driverVehicle)
         {
+            // Set the creation info (like timestamp)
+            driverVehicle.SetCreateInfo();
+
+            // Add the new DriverVehicle record to the context
             _context.DriverVehicles.Add(driverVehicle);
+
+            // Save the new record asynchronously
             await _context.SaveChangesAsync();
 
+            // Return a response with status code 201 (Created), including the new DriverVehicle
             return CreatedAtAction("GetDriverVehicle", new { id = driverVehicle.DriverVehicleId }, driverVehicle);
         }
 
@@ -94,12 +117,16 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return NotFound();
             }
 
+            // Remove the DriverVehicle from the context
             _context.DriverVehicles.Remove(driverVehicle);
+
+            // Save the changes asynchronously
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return NoContent(); // Return status code 204 for successful deletion
         }
 
+        // Helper method to check if a DriverVehicle exists
         private bool DriverVehicleExists(int id)
         {
             return _context.DriverVehicles.Any(e => e.DriverVehicleId == id);

@@ -1,15 +1,47 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
+﻿using System.Net.NetworkInformation;
 
-namespace Ride_Sharing_Project_isdb_bisew.Models
+public class BaseEntity
 {
-   public class BaseEntity
+    public string? CreateBy { get; set; }
+    public DateTime CreateDate { get; set; }
+    public string? UpdateBy { get; set; }
+    public DateTime? UpdateDate { get; set; }
+    public bool IsActive { get; set; }
+
+    public BaseEntity()
     {
-        public string? CreateBy { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string? UpdateBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
-        public bool IsActive { get; set; }
+        IsActive = true; // Default value
+    }
+
+    public void SetCreateInfo()
+    {
+        CreateBy = GetMacAddress();
+        CreateDate = DateTime.Now;
+    }
+
+    public void SetUpdateInfo()
+    {
+        UpdateBy = GetMacAddress();
+        UpdateDate = DateTime.Now;
+    }
+
+    private string GetMacAddress()
+    {
+        try
+        {
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (var networkInterface in networkInterfaces)
+            {
+                if (networkInterface.OperationalStatus == OperationalStatus.Up)
+                {
+                    return networkInterface.GetPhysicalAddress().ToString();
+                }
+            }
+            return "Unknown MAC";
+        }
+        catch
+        {
+            return "Error Retrieving MAC";
+        }
     }
 }
