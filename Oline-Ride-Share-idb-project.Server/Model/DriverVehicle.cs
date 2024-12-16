@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Ride_Sharing_Project_isdb_bisew.Models;
+//using Ride_Sharing_Project_isdb_bisew.Models;
 
 namespace Oline_Ride_Share_idb_project.Server.Model
 {
@@ -15,6 +15,7 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public int VehicleId { get; set; }
         public virtual Vehicle? Vehicle { get; set; }
         public virtual ICollection<RideBook>? RideBooks { get; set; }
+       
     }
 
 }

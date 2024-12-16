@@ -1,4 +1,4 @@
-﻿using Ride_Sharing_Project_isdb_bisew.Models;
+﻿//using Ride_Sharing_Project_isdb_bisew.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

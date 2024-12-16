@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Data;
+using Oline_Ride_Share_idb_project.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,8 @@ builder.Services.AddControllers();
 
 // Register IHttpClientFactory
 builder.Services.AddHttpClient();
-
+builder.Services.AddScoped<DistanceService>();  // Register DistanceService
+//builder.Services.AddScoped<FirebaseService>();  // Register FirebaseService
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

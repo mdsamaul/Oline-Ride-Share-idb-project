@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oline_Ride_Share_idb_project.Server.Data;
 
@@ -11,9 +12,11 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    partial class DatabaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241215010006_ORSProjectInit")]
+    partial class ORSProjectInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,13 +249,7 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FcmToken")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")

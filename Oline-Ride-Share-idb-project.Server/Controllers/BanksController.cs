@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Data;
@@ -43,16 +42,21 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         }
 
         // PUT: api/Banks/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBank(int id, Bank bank)
         {
             if (id != bank.BankId)
             {
-                return BadRequest();
+                return BadRequest("Bank ID does not match.");
             }
 
-            _context.Entry(bank).State = EntityState.Modified;
+            var existingBank = await _context.Banks.FindAsync(id);
+            if (existingBank == null)
+            {
+                return NotFound("Bank not found.");
+            }
+            existingBank.BankName = bank.BankName; // Update other properties as needed
+            existingBank.SetUpdateInfo(); // Automatically update UpdateBy and UpdateDate
 
             try
             {
@@ -74,14 +78,15 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         }
 
         // POST: api/Banks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Bank>> PostBank(Bank bank)
         {
+            bank.SetCreateInfo();
+            // BaseEntity constructor will handle CreateBy and CreateDate
             _context.Banks.Add(bank);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBank", new { id = bank.BankId }, bank);
+            return CreatedAtAction(nameof(GetBank), new { id = bank.BankId }, bank);
         }
 
         // DELETE: api/Banks/5
@@ -91,7 +96,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             var bank = await _context.Banks.FindAsync(id);
             if (bank == null)
             {
-                return NotFound();
+                return NotFound("Bank not found.");
             }
 
             _context.Banks.Remove(bank);

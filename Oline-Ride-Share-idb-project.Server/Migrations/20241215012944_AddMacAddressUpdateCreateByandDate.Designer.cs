@@ -12,8 +12,8 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    [Migration("20241214160654_ORSProjectInit")]
-    partial class ORSProjectInit
+    [Migration("20241215012944_AddMacAddressUpdateCreateByandDate")]
+    partial class AddMacAddressUpdateCreateByandDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
