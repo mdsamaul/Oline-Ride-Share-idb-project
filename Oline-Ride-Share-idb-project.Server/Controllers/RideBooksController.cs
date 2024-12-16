@@ -57,15 +57,19 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             );
 
             // DriverVehicle এবং Vehicle সম্পর্ক সন্নিবেশ করা
-            var driverVehicle = await _context.DriverVehicles
-                .Include(dv => dv.Vehicle)  // শুধুমাত্র Vehicle সম্পর্ক সন্নিবেশ করা
-                .ThenInclude(v => v.VehicleTypes)  // VehicleTypes সম্পর্ক সন্নিবেশ করা
-                .FirstOrDefaultAsync(dv => dv.DriverVehicleId == rideBook.DriverVehicleId);
+            //var driverVehicle = await _context.DriverVehicles
+            //    .Include(dv => dv.Vehicle)  // শুধুমাত্র Vehicle সম্পর্ক সন্নিবেশ করা
+            //    .ThenInclude(v => v.VehicleTypes)  // VehicleTypes সম্পর্ক সন্নিবেশ করা
+            //    .FirstOrDefaultAsync(dv => dv.DriverVehicleId == rideBook.DriverVehicleId);
+            var Dv = await _context.DriverVehicles.FindAsync(rideBook.DriverVehicleId);
+            var Vehicle = await _context.Vehicles.FindAsync(Dv.VehicleId);
+            var Vt = await _context.VehicleTypes.FindAsync(Vehicle.VehicleTypeId);
+            var perKmFare = Vt.PerKmFare;
 
             // DriverVehicle এবং VehicleTypes চেক করা
-            if (driverVehicle?.Vehicle?.VehicleTypes != null)
+            if (Dv?.Vehicle?.VehicleTypes != null)
             {
-                var perKmFare = driverVehicle.Vehicle.VehicleTypes.PerKmFare; // VehicleTypes থেকে PerKmFare নেওয়া
+                //var perKmFare = driverVehicle.Vehicle.VehicleTypes.PerKmFare; // VehicleTypes থেকে PerKmFare নেওয়া
                 if (perKmFare != null) // Ensure PerKmFare is not null
                 {
                     // PerKmFare দিয়ে মোট ফেয়ার হিসাব করা
