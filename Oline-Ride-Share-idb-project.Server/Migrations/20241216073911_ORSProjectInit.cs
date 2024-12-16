@@ -157,6 +157,8 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     DriverLatitude = table.Column<float>(type: "real", nullable: false),
                     DriverLongitude = table.Column<float>(type: "real", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    FcmToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),

@@ -18,7 +18,8 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         private readonly DatabaseDbContext _context;
         //private readonly FirebaseService _firebaseService;
         private readonly DistanceService _distanceService;  // Injecting DistanceService
-
+        private decimal totalFare;
+        private decimal baseFare;
         public RideBooksController(DatabaseDbContext context, DistanceService distanceService)
         {
             _context = context;
@@ -73,8 +74,9 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 if (perKmFare != null) // Ensure PerKmFare is not null
                 {
                     // PerKmFare দিয়ে মোট ফেয়ার হিসাব করা
-                    decimal totalFare = (decimal)distance * perKmFare;
-                    rideBook.TotalFare = totalFare;
+                    totalFare = (decimal)distance * perKmFare;
+                    baseFare = totalFare * 0.2m;
+                    rideBook.TotalFare = totalFare+baseFare;
                 }
                 else
                 {
@@ -91,6 +93,14 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             // Set the calculated distance in the RideBook model
             rideBook.DistanceInMeters = (float)distance;
 
+            var FareDetails = new FareDetail()
+            {
+                VehicleTypeId = Vehicle.VehicleTypeId,
+                BaseFare = baseFare,
+                TotalFare=totalFare
+            };
+            FareDetails.SetCreateInfo();
+            _context.FareDetails.Add(FareDetails);
             // Save the ride request to the database
             rideBook.SetCreateInfo(); // যেটি হয়তো আপনার custom method, সময় ও user info সেট করার জন্য
             _context.RideBooks.Add(rideBook);
