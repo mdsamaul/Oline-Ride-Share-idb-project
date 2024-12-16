@@ -20,6 +20,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         {
             _context = context;
         }
+
         // GET: api/VehicleTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VehicleType>>> GetVehicleTypes()
@@ -51,10 +52,24 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(vehicleType).State = EntityState.Modified;
+            var existingVehicleType = await _context.VehicleTypes.FindAsync(id);
+            if (existingVehicleType == null)
+            {
+                return NotFound("Vehicle Type not found.");
+            }
+
+            // Set update information for the existing entity
+            existingVehicleType.SetUpdateInfo();
+
+            // Apply the updates to the existing entity
+            existingVehicleType.VehicleTypeName = vehicleType.VehicleTypeName; // Update only necessary fields
+            existingVehicleType.PerKmFare = vehicleType.PerKmFare;
+            // Add other properties that need to be updated...
 
             try
             {
+                // Mark the entity as modified
+                _context.Entry(existingVehicleType).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -77,6 +92,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleType>> PostVehicleType(VehicleType vehicleType)
         {
+            vehicleType.SetCreateInfo();
             _context.VehicleTypes.Add(vehicleType);
             await _context.SaveChangesAsync();
 

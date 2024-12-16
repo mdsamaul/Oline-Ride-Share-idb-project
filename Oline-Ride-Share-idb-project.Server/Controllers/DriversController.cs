@@ -43,7 +43,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         }
 
         // PUT: api/Drivers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDriver(int id, Driver driver)
         {
@@ -52,7 +51,32 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(driver).State = EntityState.Modified;
+            var exDriver = await _context.Drivers.FindAsync(id);
+            if (exDriver == null)
+            {
+                return NotFound("Driver Not Found");
+            }
+
+            // Update existing driver details
+            exDriver.SetUpdateInfo();
+            exDriver.DriverName = driver.DriverName;
+            exDriver.PhoneNumber = driver.PhoneNumber;
+            exDriver.Email = driver.Email;
+            exDriver.DrivingLicenseNo = driver.DrivingLicenseNo;
+            exDriver.DriverNid = driver.DriverNid;
+            exDriver.DriverImage = driver.DriverImage;
+            exDriver.CompanyId = driver.CompanyId;
+            exDriver.IsAvailable = driver.IsAvailable; // Update IsAvailable
+            exDriver.FcmToken = driver.FcmToken;       // Update FcmToken
+
+            // Update Latitude and Longitude if provided
+            if (driver.DriverLatitude != 0 && driver.DriverLongitude != 0)
+            {
+                exDriver.DriverLatitude = driver.DriverLatitude;
+                exDriver.DriverLongitude = driver.DriverLongitude;
+            }
+
+            _context.Entry(exDriver).State = EntityState.Modified;
 
             try
             {
@@ -74,10 +98,21 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         }
 
         // POST: api/Drivers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Driver>> PostDriver(Driver driver)
         {
+            driver.SetCreateInfo();
+
+            // Default values for new drivers
+            if (driver.DriverLatitude == 0 || driver.DriverLongitude == 0)
+            {
+                driver.DriverLatitude = 0; // Default Latitude
+                driver.DriverLongitude = 0; // Default Longitude
+            }
+
+            driver.IsAvailable = true; // Default to available
+            driver.FcmToken = driver.FcmToken ?? string.Empty; // Default to empty string if null
+
             _context.Drivers.Add(driver);
             await _context.SaveChangesAsync();
 

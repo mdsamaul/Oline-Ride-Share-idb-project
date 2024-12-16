@@ -52,7 +52,26 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(customer).State = EntityState.Modified;
+            var exCustomer = await _context.Customers.FindAsync(id);
+            if (exCustomer == null)
+            {
+                return NotFound("Customer not found");
+            }
+
+            // Set the updated information (timestamp, etc.)
+            exCustomer.SetUpdateInfo();
+
+            // Update the fields that need to be modified
+            exCustomer.CustomerName = customer.CustomerName;
+            exCustomer.CustomerPhoneNumber = customer.CustomerPhoneNumber;
+            exCustomer.CustomerEmail = customer.CustomerEmail;
+            exCustomer.CustomerNID = customer.CustomerNID;
+            exCustomer.CustomerImage = customer.CustomerImage;
+            exCustomer.CustomerLatitude = customer.CustomerLatitude;  // Automatically sent from front-end
+            exCustomer.CustomerLongitude = customer.CustomerLongitude;  // Automatically sent from front-end
+
+            // Mark the entity as modified
+            _context.Entry(exCustomer).State = EntityState.Modified;
 
             try
             {
@@ -78,6 +97,14 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
+            customer.SetCreateInfo(); // Set the creation information (timestamps, etc.)
+
+            // Ensure latitude and longitude are provided (optional, based on your requirement)
+            if (customer.CustomerLatitude == 0 || customer.CustomerLongitude == 0)
+            {
+                return BadRequest("Latitude and Longitude are required.");
+            }
+
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
