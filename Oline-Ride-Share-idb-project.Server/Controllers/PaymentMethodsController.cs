@@ -51,8 +51,14 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(paymentMethod).State = EntityState.Modified;
+            var exPaymentMethod = await _context.PaymentMethods.FindAsync(id);
+            if (exPaymentMethod == null)
+            {
+                return NotFound("payment method not found");
+            }
+            exPaymentMethod.MethodType = paymentMethod.MethodType;
+            exPaymentMethod.SetUpdateInfo();
+              //_context.Entry(paymentMethod).State = EntityState.Modified;
 
             try
             {
@@ -78,6 +84,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<PaymentMethod>> PostPaymentMethod(PaymentMethod paymentMethod)
         {
+            paymentMethod.SetCreateInfo();
             _context.PaymentMethods.Add(paymentMethod);
             await _context.SaveChangesAsync();
 
