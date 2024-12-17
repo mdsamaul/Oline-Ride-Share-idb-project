@@ -21,6 +21,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         private RideBook? _currentRideBook;
         private readonly DistanceService _distanceService;
         private static double distance;
+
         public RideTracksController(DatabaseDbContext context, IServiceScopeFactory serviceScopeFactory, DistanceService distanceService)
         {
             _context = context;
@@ -84,12 +85,11 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 {
                     var context = scope.ServiceProvider.GetRequiredService<DatabaseDbContext>();
 
-                    // বর্তমান অবস্থান থেকে গন্তব্যে পৌঁছানোর দূরত্ব গণনা করা
                     distance = _distanceService.CalculateDistance(
                         currentLatitude,
                         currentLongitude,
-                        _currentRideBook.DestinationLatitude,
-                        _currentRideBook.DestinationLongitude) * 1000;
+                        _currentRideBook.SourceLatitude,
+                        _currentRideBook.SourceLongitude) * 1000;
 
                     Console.WriteLine($"Distance to Destination: {distance} meters");
 
@@ -105,7 +105,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                         lastRideTrack.RideTrackLongitude = currentLongitude;
                         lastRideTrack.Distance = (int)distance;
                         lastRideTrack.TrackTime = DateTime.Now;
-
                         context.Entry(lastRideTrack).State = EntityState.Modified;
                         Console.WriteLine($"Updated RideTrack at {lastRideTrack.TrackTime}");
                     }
@@ -120,7 +119,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                             Timestamp = DateTime.Now,
                             Distance = (int)distance,
                             TrackTime = DateTime.Now,
-                            Status=true
+                            Status = true
                         };
 
                         rideTrack.SetCreateInfo();
@@ -132,10 +131,16 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
 
                     await context.SaveChangesAsync();
 
+                    var totaldistance = _distanceService.CalculateDistance(
+                        _currentRideBook.SourceLatitude,
+                        _currentRideBook.SourceLongitude,
+                        _currentRideBook.DestinationLatitude,
+                        _currentRideBook.DestinationLongitude) * 1000;
+
                     // গন্তব্যে পৌঁছালে ট্র্যাকিং বন্ধ করা
-                    if (distance <= 100) // 100 মিটার বা কম দূরত্বে পৌঁছালে
+                    if (distance >= totaldistance - 50) // 50 মিটার বা কম দূরত্বে পৌঁছালে
                     {
-                        StopTracking();
+                        await StopTracking(_currentRideBook.CustomerId);  // Ensure it's awaited since StopTracking is async
                         Console.WriteLine("Destination Reached! Stopping tracking.");
                     }
                 }
@@ -147,13 +152,56 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         }
 
         // ট্র্যাকিং থামানোর জন্য মেথড
-        private void StopTracking()
+        private async Task StopTracking(int customerId)
         {
             if (_timer != null)
             {
-                _timer.Dispose();
-                _timer = null;
-                Console.WriteLine("Tracking stopped.");
+                try
+                {
+                    var customer = await _context.Customers.FindAsync(customerId);
+                    var rideBook = await _context.RideBooks
+                        .Where(r => r.CustomerId == customer.CustomerId)
+                        .OrderByDescending(r => r.RideBookId)
+                        .FirstOrDefaultAsync();
+
+                    if (rideBook == null) return;
+
+                    var driverVehicle = _context.DriverVehicles.FirstOrDefault(dv => dv.DriverVehicleId == rideBook.DriverVehicleId);
+                    var vehicle = _context.Vehicles.FirstOrDefault(vid => vid.VehicleId == driverVehicle.VehicleId);
+                    var vehicleType = _context.VehicleTypes.FirstOrDefault(vtid => vtid.VehicleTypeId == vehicle.VehicleTypeId);
+                    var farePerKm = vehicleType.PerKmFare;
+                    var amount = (int)(distance / 1000) * farePerKm;
+
+                    // ইনভয়েস তৈরি করা
+                    var invoice = new Invoice
+                    {
+                        PaymentTime = DateTime.Now,
+                        Amount = amount,
+                        Particular = "",
+                        CustomerId = customer.CustomerId,
+                        PaymentMethodId = 1
+                    };
+                    invoice.SetCreateInfo();
+                    _context.Invoices.Add(invoice);                  
+                    await _context.SaveChangesAsync();
+                    var payment = new Payment()
+                    {
+                        InvoiceId= invoice.InvoiceId,
+                        Amount = amount,
+                        PaymentDate= DateTime.Now,
+                    };
+                    payment.SetCreateInfo();
+                    _context.Payments.Add(payment);
+                    await _context.SaveChangesAsync();
+                    // ট্যামার বন্ধ করা
+                    _timer.Dispose();
+                    _timer = null;
+                    Console.WriteLine("Tracking stopped.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in StopTracking: {ex.Message}");
+                }
             }
         }
 
@@ -187,42 +235,11 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         {
             try
             {
-                // ট্যামার স্ট্যাটাস চেক করা
-                Console.WriteLine($"Stopping Timer: {_timer?.ToString()}");
+                // ট্যামারের স্ট্যাটাস চেক করা
                 if (_timer != null)
                 {
-                    // কাস্টমার এর রাইডবুক বের করা যেখানে ট্র্যাকিং চলছে
-                    var customer = await _context.Customers.FindAsync(customerId);
-                    var rideBook = await _context.RideBooks.Where(r => r.CustomerId == customer.CustomerId).OrderByDescending(r => r.RideBookId).FirstOrDefaultAsync(); 
-                    var driverVehicle = _context.DriverVehicles.FirstOrDefault(dv=>dv.DriverVehicleId == rideBook.DriverVehicleId);
-                    var vehicle =  _context.Vehicles.FirstOrDefault(vid => vid.VehicleId == driverVehicle.VehicleId);
-                    var vehicleType =  _context.VehicleTypes.FirstOrDefault(vtid => vtid.VehicleTypeId == vehicle.VehicleTypeId);
-                    var farePerKm = vehicleType.PerKmFare;
-                    var amount = (int)(distance/1000) * farePerKm;
-
-                    // ইনভয়েস তৈরি করা
-                    var invoice = new Invoice
-                    {
-                        //RideBookId = activeRideBook.RideBookId,
-                        //CustomerId = activeRideBook.CustomerId,
-                        PaymentTime = DateTime.Now,
-                        Amount = amount,
-                        Particular="",
-                        CustomerId=customer.CustomerId,
-                        PaymentMethodId = 1
-                    };
-
-                   
-
-                    // ডাটাবেস আপডেট করা
-                    //
-
-                    // ট্যামার বন্ধ করা
-                    StopTracking();
-                    _context.Invoices.Add(invoice);
-                    await _context.SaveChangesAsync();
-
-                    return Ok($"Tracking stopped successfully. Total fare: .");
+                    await StopTracking(customerId); // Make sure it's awaited
+                    return Ok("Tracking stopped successfully.");
                 }
                 else
                 {
@@ -234,6 +251,5 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
     }
 }
