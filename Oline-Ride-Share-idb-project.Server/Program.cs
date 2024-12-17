@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Data;
+using Oline_Ride_Share_idb_project.Server.Hubs; // Add this namespace for SignalR Hub
 using Oline_Ride_Share_idb_project.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<DistanceService>();  // Register DistanceService
 //builder.Services.AddScoped<FirebaseService>();  // Register FirebaseService
+
+// Register SignalR
+builder.Services.AddSignalR(); // Register SignalR services
+
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,6 +40,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+// Map SignalR Hub
+app.MapHub<ChatHub>("/chatHub"); // Map the SignalR hub to the "/chatHub" route
 
 // Fallback for SPA routing
 app.MapFallbackToFile("/index.html");
