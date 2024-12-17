@@ -55,7 +55,11 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return NotFound("Bank not found.");
             }
-            existingBank.BankName = bank.BankName; // Update other properties as needed
+            existingBank.BankName = bank.BankName;
+            existingBank.CompanyId = bank.CompanyId;
+            existingBank.AccountNumber = bank.AccountNumber;
+            existingBank.Address = bank.Address;
+            existingBank.BranchName = bank.BranchName;
             existingBank.SetUpdateInfo(); // Automatically update UpdateBy and UpdateDate
 
             try
