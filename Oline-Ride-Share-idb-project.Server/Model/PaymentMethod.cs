@@ -1,5 +1,4 @@
-﻿//using Ride_Sharing_Project_isdb_bisew.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Oline_Ride_Share_idb_project.Server.Model
@@ -11,6 +10,4 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public string? MethodType { get; set; }
         public virtual ICollection<Invoice>? Invoices { get; set; }
     }
-
-
 }

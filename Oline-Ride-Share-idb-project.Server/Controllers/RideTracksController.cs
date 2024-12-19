@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Data;
 using Oline_Ride_Share_idb_project.Server.Model;
-using Oline_Ride_Share_idb_project.Server.Model.vm;
 using Oline_Ride_Share_idb_project.Server.Services;
 using System;
 using System.Linq;
@@ -21,45 +20,32 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         private RideBook? _currentRideBook;
         private readonly DistanceService _distanceService;
         private static double distance;
-
         public RideTracksController(DatabaseDbContext context, IServiceScopeFactory serviceScopeFactory, DistanceService distanceService)
         {
             _context = context;
             _serviceScopeFactory = serviceScopeFactory;
             _distanceService = distanceService;
         }
-
-        // POST: api/RideTracks/start
         [HttpPost("start")]
         public async Task<IActionResult> StartRideTracking(int rideBookId, float latitude, float longitude)
         {
             try
             {
-                // রাইডবুক খুঁজে বের করা
                 _currentRideBook = await _context.RideBooks
                     .Include(rb => rb.RideTracks)
                     .FirstOrDefaultAsync(rb => rb.RideBookId == rideBookId);
-
                 if (_currentRideBook == null)
                 {
                     return NotFound("RideBook not found.");
                 }
-
-                // রাইড শুরু করার সময় নির্ধারণ
                 _currentRideBook.StartTime = DateTime.Now;
                 await _context.SaveChangesAsync();
-
-                // যদি ট্যামার আগে থেকেই চলতে থাকে তবে এটি বন্ধ করে দেওয়া
                 if (_timer != null)
                 {
                     return BadRequest("Tracking is already in progress.");
                 }
-
-                // রাইড ট্র্যাকিং শুরু করার জন্য ট্যামার ইনিশিয়ালাইজ করা
                 _timer = new Timer(UpdateRideTrack, new { Latitude = latitude, Longitude = longitude }, TimeSpan.Zero, TimeSpan.FromSeconds(2));
-
-                // ট্যামারের স্ট্যাটাস লগ করা
-                Console.WriteLine($"Timer Status: {_timer?.ToString()}");
+                 Console.WriteLine($"Timer Status: {_timer?.ToString()}");
                 return Ok("Ride started and tracking initiated.");
             }
             catch (Exception ex)
@@ -67,40 +53,30 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
-        // রাইড ট্র্যাক আপডেট করার জন্য ট্যামার থেকে কল হওয়া মেথড
         private async void UpdateRideTrack(object? state)
         {
             try
             {
                 if (_currentRideBook == null) return;
-
                 var data = (dynamic)state;
                 var currentLatitude = data.Latitude;
                 var currentLongitude = data.Longitude;
-
                 Console.WriteLine($"Updating Track: Latitude = {currentLatitude}, Longitude = {currentLongitude}");
-
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<DatabaseDbContext>();
-
                     distance = _distanceService.CalculateDistance(
                         currentLatitude,
                         currentLongitude,
                         _currentRideBook.SourceLatitude,
                         _currentRideBook.SourceLongitude) * 1000;
-
                     Console.WriteLine($"Distance to Destination: {distance} meters");
-
-                    // শেষ রাইড ট্র্যাক খুঁজে বের করা
                     var lastRideTrack = _currentRideBook.RideTracks?
                         .OrderByDescending(rt => rt.Timestamp)
                         .FirstOrDefault();
 
                     if (lastRideTrack != null)
                     {
-                        // পূর্বের রাইড ট্র্যাক আপডেট করা
                         lastRideTrack.RideTrackLatitude = currentLatitude;
                         lastRideTrack.RideTrackLongitude = currentLongitude;
                         lastRideTrack.Distance = (int)distance;
@@ -110,7 +86,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     }
                     else
                     {
-                        // নতুন রাইড ট্র্যাক তৈরি করা
                         var rideTrack = new RideTrack
                         {
                             RideBookId = _currentRideBook.RideBookId,
@@ -118,29 +93,22 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                             RideTrackLongitude = currentLongitude,
                             Timestamp = DateTime.Now,
                             Distance = (int)distance,
-                            TrackTime = DateTime.Now,
-                            Status = true
+                            TrackTime = DateTime.Now
                         };
-
                         rideTrack.SetCreateInfo();
-
                         _currentRideBook.RideTracks?.Add(rideTrack);
                         context.RideTracks.Add(rideTrack);
                         Console.WriteLine($"Added new RideTrack at {rideTrack.TrackTime}");
                     }
-
                     await context.SaveChangesAsync();
-
                     var totaldistance = _distanceService.CalculateDistance(
                         _currentRideBook.SourceLatitude,
                         _currentRideBook.SourceLongitude,
                         _currentRideBook.DestinationLatitude,
                         _currentRideBook.DestinationLongitude) * 1000;
-
-                    // গন্তব্যে পৌঁছালে ট্র্যাকিং বন্ধ করা
-                    if (distance >= totaldistance - 50) // 50 মিটার বা কম দূরত্বে পৌঁছালে
+                    if (distance >= totaldistance - 50) 
                     {
-                        await StopTracking(_currentRideBook.CustomerId);  // Ensure it's awaited since StopTracking is async
+                        await StopTracking(_currentRideBook.CustomerId); 
                         Console.WriteLine("Destination Reached! Stopping tracking.");
                     }
                 }
@@ -150,8 +118,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 Console.WriteLine($"Error in UpdateRideTrack: {ex.Message}");
             }
         }
-
-        // ট্র্যাকিং থামানোর জন্য মেথড
         private async Task StopTracking(int customerId)
         {
             if (_timer != null)
@@ -163,16 +129,12 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                         .Where(r => r.CustomerId == customer.CustomerId)
                         .OrderByDescending(r => r.RideBookId)
                         .FirstOrDefaultAsync();
-
                     if (rideBook == null) return;
-
                     var driverVehicle = _context.DriverVehicles.FirstOrDefault(dv => dv.DriverVehicleId == rideBook.DriverVehicleId);
                     var vehicle = _context.Vehicles.FirstOrDefault(vid => vid.VehicleId == driverVehicle.VehicleId);
                     var vehicleType = _context.VehicleTypes.FirstOrDefault(vtid => vtid.VehicleTypeId == vehicle.VehicleTypeId);
                     var farePerKm = vehicleType.PerKmFare;
                     var amount = (int)(distance / 1000) * farePerKm;
-
-                    // ইনভয়েস তৈরি করা
                     var invoice = new Invoice
                     {
                         PaymentTime = DateTime.Now,
@@ -193,7 +155,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     payment.SetCreateInfo();
                     _context.Payments.Add(payment);
                     await _context.SaveChangesAsync();
-                    // ট্যামার বন্ধ করা
                     _timer.Dispose();
                     _timer = null;
                     Console.WriteLine("Tracking stopped.");
@@ -204,8 +165,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 }
             }
         }
-
-        // GET: api/RideTracks/{rideBookId}
         [HttpGet("{rideBookId}")]
         public async Task<IActionResult> GetRideTracks(int rideBookId)
         {
@@ -215,12 +174,10 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     .Where(rt => rt.RideBookId == rideBookId)
                     .OrderBy(rt => rt.Timestamp)
                     .ToListAsync();
-
                 if (!rideTracks.Any())
                 {
                     return NotFound("No Ride Tracks found for the given RideBook.");
                 }
-
                 return Ok(rideTracks);
             }
             catch (Exception ex)
@@ -228,17 +185,14 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
-        // POST: api/RideTracks/stop
         [HttpPost("stop")]
         public async Task<IActionResult> StopRideTracking(int customerId)
         {
             try
             {
-                // ট্যামারের স্ট্যাটাস চেক করা
                 if (_timer != null)
                 {
-                    await StopTracking(customerId); // Make sure it's awaited
+                    await StopTracking(customerId); 
                     return Ok("Tracking stopped successfully.");
                 }
                 else

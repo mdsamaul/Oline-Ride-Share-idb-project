@@ -16,5 +16,4 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public string? BranchName { get; set; }
         public string? AccountNumber { get; set; }
     }
-
 }

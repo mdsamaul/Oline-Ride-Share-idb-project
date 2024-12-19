@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-//using Ride_Sharing_Project_isdb_bisew.Models;
-
 namespace Oline_Ride_Share_idb_project.Server.Model
 {
     public class Chat : BaseEntity
@@ -13,11 +11,9 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public virtual Customer? Customer { get; set; } 
-        [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
-        public virtual Employee? Employee { get; set; } 
+        [ForeignKey("DriverId")]
+        public int DriverId { get; set; }
+        public virtual Driver? Driver { get; set; } 
         public string? SenderType { get; set; } 
     }
-
-
 }
