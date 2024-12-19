@@ -20,20 +20,15 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         {
             _context = context;
         }
-
-        // GET: api/Companies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanys()
         {
             return await _context.Companys.ToListAsync();
         }
-
-        // GET: api/Companies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(int id)
         {
             var company = await _context.Companys.FindAsync(id);
-
             if (company == null)
             {
                 return NotFound();
@@ -41,9 +36,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
 
             return company;
         }
-
-        // PUT: api/Companies/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCompany(int id, Company company)
         {
@@ -51,9 +43,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(company).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -72,19 +62,13 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
 
             return NoContent();
         }
-
-        // POST: api/Companies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Company>> PostCompany(Company company)
         {
             _context.Companys.Add(company);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetCompany", new { id = company.CompanyId }, company);
         }
-
-        // DELETE: api/Companies/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompany(int id)
         {
@@ -93,13 +77,10 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return NotFound();
             }
-
             _context.Companys.Remove(company);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-
         private bool CompanyExists(int id)
         {
             return _context.Companys.Any(e => e.CompanyId == id);

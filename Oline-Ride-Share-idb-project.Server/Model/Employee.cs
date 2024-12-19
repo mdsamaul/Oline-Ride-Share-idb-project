@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-//using Ride_Sharing_Project_isdb_bisew.Models;
 
 namespace Oline_Ride_Share_idb_project.Server.Model
 {
@@ -16,5 +15,4 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public string? Email { get; set; }
         public virtual ICollection<Chat>? Chats { get; set; }
     }
-
 }

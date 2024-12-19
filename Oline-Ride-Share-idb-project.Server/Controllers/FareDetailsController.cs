@@ -15,20 +15,15 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
     public class FareDetailsController : ControllerBase
     {
         private readonly DatabaseDbContext _context;
-
         public FareDetailsController(DatabaseDbContext context)
         {
             _context = context;
         }
-
-        // GET: api/FareDetails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FareDetail>>> GetFareDetails()
         {
             return await _context.FareDetails.ToListAsync();
         }
-
-        // GET: api/FareDetails/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FareDetail>> GetFareDetail(int id)
         {
@@ -38,12 +33,8 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return NotFound();
             }
-
             return fareDetail;
         }
-
-        // PUT: api/FareDetails/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFareDetail(int id, FareDetail fareDetail)
         {
@@ -51,9 +42,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(fareDetail).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -69,22 +58,15 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
-        // POST: api/FareDetails
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<FareDetail>> PostFareDetail(FareDetail fareDetail)
         {
             _context.FareDetails.Add(fareDetail);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetFareDetail", new { id = fareDetail.FareDetailId }, fareDetail);
         }
-
-        // DELETE: api/FareDetails/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFareDetail(int id)
         {
@@ -93,13 +75,10 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return NotFound();
             }
-
             _context.FareDetails.Remove(fareDetail);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-
         private bool FareDetailExists(int id)
         {
             return _context.FareDetails.Any(e => e.FareDetailId == id);

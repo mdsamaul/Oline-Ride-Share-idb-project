@@ -15,35 +15,25 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
     public class PaymentMethodsController : ControllerBase
     {
         private readonly DatabaseDbContext _context;
-
         public PaymentMethodsController(DatabaseDbContext context)
         {
             _context = context;
         }
-
-        // GET: api/PaymentMethods
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentMethod>>> GetPaymentMethods()
         {
             return await _context.PaymentMethods.ToListAsync();
         }
-
-        // GET: api/PaymentMethods/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PaymentMethod>> GetPaymentMethod(int id)
         {
             var paymentMethod = await _context.PaymentMethods.FindAsync(id);
-
             if (paymentMethod == null)
             {
                 return NotFound();
             }
-
             return paymentMethod;
         }
-
-        // PUT: api/PaymentMethods/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaymentMethod(int id, PaymentMethod paymentMethod)
         {
@@ -59,7 +49,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             exPaymentMethod.MethodType = paymentMethod.MethodType;
             exPaymentMethod.SetUpdateInfo();
               //_context.Entry(paymentMethod).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -75,23 +64,16 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
-        // POST: api/PaymentMethods
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<PaymentMethod>> PostPaymentMethod(PaymentMethod paymentMethod)
         {
             paymentMethod.SetCreateInfo();
             _context.PaymentMethods.Add(paymentMethod);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetPaymentMethod", new { id = paymentMethod.PaymentMethodId }, paymentMethod);
         }
-
-        // DELETE: api/PaymentMethods/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaymentMethod(int id)
         {
@@ -100,13 +82,10 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return NotFound();
             }
-
             _context.PaymentMethods.Remove(paymentMethod);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-
         private bool PaymentMethodExists(int id)
         {
             return _context.PaymentMethods.Any(e => e.PaymentMethodId == id);
