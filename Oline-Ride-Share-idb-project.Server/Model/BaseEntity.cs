@@ -7,24 +7,20 @@ public class BaseEntity
     public string? UpdateBy { get; set; }
     public DateTime? UpdateDate { get; set; }
     public bool IsActive { get; set; }
-
     public BaseEntity()
     {
-        IsActive = true; // Default value
+        IsActive = true; 
     }
-
     public void SetCreateInfo()
     {
         CreateBy = GetMacAddress();
         CreateDate = DateTime.Now;
     }
-
     public void SetUpdateInfo()
     {
         UpdateBy = GetMacAddress();
         UpdateDate = DateTime.Now;
     }
-
     private string GetMacAddress()
     {
         try

@@ -12,7 +12,7 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    [Migration("20241216073911_ORSProjectInit")]
+    [Migration("20241219045211_ORSProjectInit")]
     partial class ORSProjectInit
     {
         /// <inheritdoc />
@@ -90,7 +90,10 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("DriverId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -111,6 +114,8 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.HasKey("ChatId");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("EmployeeId");
 
@@ -748,15 +753,19 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Oline_Ride_Share_idb_project.Server.Model.Employee", "Employee")
-                        .WithMany("Chats")
-                        .HasForeignKey("EmployeeId")
+                    b.HasOne("Oline_Ride_Share_idb_project.Server.Model.Driver", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Oline_Ride_Share_idb_project.Server.Model.Employee", null)
+                        .WithMany("Chats")
+                        .HasForeignKey("EmployeeId");
+
                     b.Navigation("Customer");
 
-                    b.Navigation("Employee");
+                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("Oline_Ride_Share_idb_project.Server.Model.Driver", b =>

@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Oline_Ride_Share_idb_project.Server.Model.vm
+﻿namespace Oline_Ride_Share_idb_project.Server.Controllers.vm
 {
-    public class RideBookVm
+    internal class RideBookVm
     {
         public int RideBookId { get; set; }
         public float DistanceInMeters { get; set; }

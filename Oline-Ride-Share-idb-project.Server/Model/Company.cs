@@ -10,11 +10,9 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public int CompanyId { get; set; }
         public string? CompanyName { get; set; }
         public string? Address { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
+        public required string PhoneNumber { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
-
         public virtual ICollection<Bank>? Banks { get; set; }
         public virtual ICollection<Driver>? Drivers { get; set; }
     }

@@ -8,7 +8,6 @@ namespace Oline_Ride_Share_idb_project.Server.Model
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
-
         public string? CustomerName { get; set; }
         [Required] 
         public string CustomerPhoneNumber { get; set; }
@@ -25,6 +24,4 @@ namespace Oline_Ride_Share_idb_project.Server.Model
         public virtual ICollection<Invoice>? Invoices { get; set; }
         public virtual ICollection<RideBook>? RideBooks { get; set; }
     }
-
-
 }

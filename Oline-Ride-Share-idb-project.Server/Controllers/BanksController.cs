@@ -14,34 +14,25 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
     public class BanksController : ControllerBase
     {
         private readonly DatabaseDbContext _context;
-
         public BanksController(DatabaseDbContext context)
         {
             _context = context;
         }
-
-        // GET: api/Banks
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bank>>> GetBanks()
         {
             return await _context.Banks.ToListAsync();
         }
-
-        // GET: api/Banks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Bank>> GetBank(int id)
         {
             var bank = await _context.Banks.FindAsync(id);
-
             if (bank == null)
             {
                 return NotFound();
             }
-
             return bank;
         }
-
-        // PUT: api/Banks/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBank(int id, Bank bank)
         {
@@ -49,7 +40,6 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest("Bank ID does not match.");
             }
-
             var existingBank = await _context.Banks.FindAsync(id);
             if (existingBank == null)
             {
@@ -60,8 +50,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             existingBank.AccountNumber = bank.AccountNumber;
             existingBank.Address = bank.Address;
             existingBank.BranchName = bank.BranchName;
-            existingBank.SetUpdateInfo(); // Automatically update UpdateBy and UpdateDate
-
+            existingBank.SetUpdateInfo(); 
             try
             {
                 await _context.SaveChangesAsync();
@@ -77,23 +66,16 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
-        // POST: api/Banks
         [HttpPost]
         public async Task<ActionResult<Bank>> PostBank(Bank bank)
         {
             bank.SetCreateInfo();
-            // BaseEntity constructor will handle CreateBy and CreateDate
             _context.Banks.Add(bank);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetBank), new { id = bank.BankId }, bank);
         }
-
-        // DELETE: api/Banks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBank(int id)
         {
@@ -102,13 +84,10 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return NotFound("Bank not found.");
             }
-
             _context.Banks.Remove(bank);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-
         private bool BankExists(int id)
         {
             return _context.Banks.Any(e => e.BankId == id);
