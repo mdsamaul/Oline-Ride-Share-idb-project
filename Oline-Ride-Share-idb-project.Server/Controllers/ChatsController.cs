@@ -44,28 +44,28 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             }
             return chat;
         }
-        [HttpGet("Conversation/{customerId}/{employeeId}")]
-        public async Task<ActionResult<IEnumerable<Chat>>> GetConversation(int customerId, int employeeId)
+        [HttpGet("Conversation/{customerId}/{DriverId}")]
+        public async Task<ActionResult<IEnumerable<Chat>>> GetConversation(int customerId, int DriverId)
         {
             var chats = await _context.Chats
-                .Where(c => (c.CustomerId == customerId && c.DriverId == employeeId) ||
-                            (c.CustomerId == employeeId && c.DriverId == customerId))
+                .Where(c => (c.CustomerId == customerId && c.DriverId == DriverId) ||
+                            (c.CustomerId == DriverId && c.DriverId == customerId))
                 .OrderBy(c => c.ChatTime)
                 .ToListAsync();
             return chats;
         }
-        [HttpPost("Join/{customerId}/{employeeId}")]
-        public async Task<IActionResult> JoinGroup(int customerId, int employeeId)
+        [HttpPost("Join/{customerId}/{DriverId}")]
+        public async Task<IActionResult> JoinGroup(int customerId, int DriverId)
         {
             var connectionId = HttpContext.Connection.Id; 
-            await _hubContext.Groups.AddToGroupAsync(connectionId, $"{customerId}-{employeeId}");
+            await _hubContext.Groups.AddToGroupAsync(connectionId, $"{customerId}-{DriverId}");
             return Ok();
         }
-        [HttpPost("Leave/{customerId}/{employeeId}")]
-        public async Task<IActionResult> LeaveGroup(int customerId, int employeeId)
+        [HttpPost("Leave/{customerId}/{DriverId}")]
+        public async Task<IActionResult> LeaveGroup(int customerId, int DriverId)
         {
             var connectionId = HttpContext.Connection.Id; 
-            await _hubContext.Groups.RemoveFromGroupAsync(connectionId, $"{customerId}-{employeeId}");
+            await _hubContext.Groups.RemoveFromGroupAsync(connectionId, $"{customerId}-{DriverId}");
             return Ok();
         }
     }
