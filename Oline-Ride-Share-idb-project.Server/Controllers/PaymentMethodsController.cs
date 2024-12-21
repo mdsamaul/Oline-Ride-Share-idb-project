@@ -48,7 +48,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             }
             exPaymentMethod.MethodType = paymentMethod.MethodType;
             exPaymentMethod.SetUpdateInfo();
-              //_context.Entry(paymentMethod).State = EntityState.Modified;
+              _context.Entry(exPaymentMethod).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();

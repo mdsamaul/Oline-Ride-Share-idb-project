@@ -43,9 +43,20 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest();
             }
-            _context.Entry(company).State = EntityState.Modified;
+            var exCompany = await _context.Companys.FindAsync(id);
+            if(exCompany == null)
+            {
+                return NotFound("compnay not found");
+            }
+            exCompany.CompanyName = company.CompanyName;
+            exCompany.Address = company.Address;
+            exCompany.PhoneNumber = company.PhoneNumber;
+            exCompany.Email = company.Email;
+            exCompany.SetUpdateInfo();
+            _context.Entry(exCompany).State = EntityState.Modified;
             try
             {
+               
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -65,6 +76,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Company>> PostCompany(Company company)
         {
+            company.SetCreateInfo();
             _context.Companys.Add(company);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetCompany", new { id = company.CompanyId }, company);

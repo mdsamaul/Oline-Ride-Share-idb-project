@@ -41,7 +41,17 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest();
             }
-            _context.Entry(payment).State = EntityState.Modified;
+            var existingPayment = await _context.Payments.FindAsync(id);
+            if (existingPayment == null)
+            {
+                return NotFound("Payment not found.");
+            }
+            existingPayment.Amount = payment.Amount;
+            existingPayment.InvoiceId = payment.InvoiceId;
+            existingPayment.Status = payment.Status;
+            existingPayment.PaymentDate = payment.PaymentDate;
+            existingPayment.SetUpdateInfo();
+            _context.Entry(existingPayment).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
@@ -62,6 +72,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Payment>> PostPayment(Payment payment)
         {
+            payment.SetCreateInfo();
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetPayment", new { id = payment.PaymentId }, payment);

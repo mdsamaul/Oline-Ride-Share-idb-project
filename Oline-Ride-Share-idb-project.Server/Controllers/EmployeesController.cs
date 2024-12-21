@@ -41,7 +41,17 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             {
                 return BadRequest();
             }
-            _context.Entry(employee).State = EntityState.Modified;
+            var existingEmployee = await _context.Employees.FindAsync(id);
+            if (existingEmployee == null)
+            {
+                return NotFound("Employee not found.");
+            }
+            existingEmployee.EmployeeName = employee.EmployeeName;
+            existingEmployee.PhoneNumber = employee.PhoneNumber;
+            existingEmployee.Email = employee.Email;
+            existingEmployee.IsLive = employee.IsLive;
+            existingEmployee.SetUpdateInfo();
+            _context.Entry(existingEmployee).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();
@@ -62,6 +72,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
+            employee.SetCreateInfo();
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
