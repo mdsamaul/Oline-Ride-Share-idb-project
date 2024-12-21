@@ -3,7 +3,7 @@
     internal class RideBookVm
     {
         public int RideBookId { get; set; }
-        public float DistanceInMeters { get; set; }
+        public float DistanceInKilometers { get; set; }
         public decimal TotalFare { get; set; }
     }
 }

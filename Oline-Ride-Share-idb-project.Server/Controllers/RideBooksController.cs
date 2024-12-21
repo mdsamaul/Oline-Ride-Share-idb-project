@@ -88,7 +88,7 @@ namespace Oline_Ride_Share_idb_project.Server.Controllers
             var rideBookDTO = new RideBookVm()
             {
                 RideBookId = rideBook.RideBookId,
-                DistanceInMeters = rideBook.DistanceInMeters,
+                DistanceInKilometers = rideBook.DistanceInMeters,
                 TotalFare = rideBook.TotalFare
             };
             return CreatedAtAction("GetRideBook", new { id = rideBookDTO.RideBookId }, rideBookDTO);
