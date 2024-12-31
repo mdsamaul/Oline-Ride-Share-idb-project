@@ -12,7 +12,7 @@ using Oline_Ride_Share_idb_project.Server.Data;
 namespace Oline_Ride_Share_idb_project.Server.Migrations
 {
     [DbContext(typeof(DatabaseDbContext))]
-    [Migration("20241219045211_ORSProjectInit")]
+    [Migration("20241231101234_ORSProjectInit")]
     partial class ORSProjectInit
     {
         /// <inheritdoc />
@@ -732,6 +732,42 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                     b.HasKey("VehicleTypeId");
 
                     b.ToTable("VehicleTypes");
+                });
+
+            modelBuilder.Entity("UserModel", b =>
+                {
+                    b.Property<int>("UserModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserModelId"));
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserModelId");
+
+                    b.ToTable("UserModels");
                 });
 
             modelBuilder.Entity("Oline_Ride_Share_idb_project.Server.Model.Bank", b =>

@@ -21,6 +21,7 @@ namespace Oline_Ride_Share_idb_project.Server.Data
         public virtual DbSet<Chat>? Chats { get; set; }
         public virtual DbSet<Company>? Companys { get; set; }
         public virtual DbSet<Employee>? Employees{ get; set; }
+        public virtual DbSet<UserModel>? UserModels{ get; set; }
 
     }
 }

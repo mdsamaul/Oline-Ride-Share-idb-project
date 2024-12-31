@@ -96,6 +96,25 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserModels",
+                columns: table => new
+                {
+                    UserModelId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserModels", x => x.UserModelId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VehicleTypes",
                 columns: table => new
                 {
@@ -530,6 +549,9 @@ namespace Oline_Ride_Share_idb_project.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "RideTracks");
+
+            migrationBuilder.DropTable(
+                name: "UserModels");
 
             migrationBuilder.DropTable(
                 name: "Employees");

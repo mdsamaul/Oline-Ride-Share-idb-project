@@ -1,0 +1,36 @@
+.headerConteiner {
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    height:90px;
+}
+   
+
+
+.hero-section {
+    width:100vw;
+    height:80vh;
+    z-index: 10;
+    position:fixed;
+    top:0;
+    background-color:rgba(0,0,0,.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.hero-body {
+    width: 50%;
+    height: 40%;
+    background-color: rgba(255, 255, 255, 0.849);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:10px;
+}
+
+  

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj": {}
+    "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj": {}
   },
   "projects": {
-    "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj": {
+    "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
+        "projectUniqueName": "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
         "projectName": "Oline-Ride-Share-idb-project.Server",
-        "projectPath": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
+        "projectPath": "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
         "packagesPath": "C:\\Users\\mdsam\\.nuget\\packages\\",
-        "outputPath": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\obj\\",
+        "outputPath": "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -58,6 +58,10 @@
             "Google.Apis.Auth": {
               "target": "Package",
               "version": "[1.68.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
