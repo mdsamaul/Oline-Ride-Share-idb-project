@@ -762,6 +762,25 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.10.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Authorization/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -4489,6 +4508,21 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.Abstractions.xml",
         "microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.authentication.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.0": {
+      "sha512": "eIhpX25uUn33Ornnh718V2G/nESvk3TNX2FjTarv634GLfE50Fhz2geJ/QYpSmFaUIQ1hkZPfd9i0LcpZ9bfLQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
+        "microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authorization/2.2.0": {
@@ -9754,6 +9788,7 @@
     "net8.0": [
       "FirebaseAdmin >= 3.1.0",
       "Google.Apis.Auth >= 1.68.0",
+      "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.0",
       "Microsoft.AspNetCore.SignalR >= 1.1.0",
       "Microsoft.AspNetCore.SpaProxy >= 9.0.0",
       "Microsoft.EntityFrameworkCore >= 9.0.0",
@@ -9772,11 +9807,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
+      "projectUniqueName": "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
       "projectName": "Oline-Ride-Share-idb-project.Server",
-      "projectPath": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
+      "projectPath": "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\Oline-Ride-Share-idb-project.Server.csproj",
       "packagesPath": "C:\\Users\\mdsam\\.nuget\\packages\\",
-      "outputPath": "D:\\course\\idb-project\\Angular\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\obj\\",
+      "outputPath": "D:\\course\\home\\idb\\idb\\Oline-Ride-Share-idb-project\\Oline-Ride-Share-idb-project.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -9823,6 +9858,10 @@
           "Google.Apis.Auth": {
             "target": "Package",
             "version": "[1.68.0, )"
+          },
+          "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           },
           "Microsoft.AspNetCore.SignalR": {
             "target": "Package",
