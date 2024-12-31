@@ -1,0 +1,103 @@
+<div class="position-relative seliderConteiner">
+    <section>
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                    <img src="./../../../assets/images/bg1.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <img src="./../../../assets/images/bg1.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="./../../../assets/images/bg1.png" class="d-block w-100" alt="...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="hero-section text-center position-absolute">
+        <div class="hero-body">
+            <div>
+                <div class="container">
+                    <div class="row mb-4">
+                        <!-- Pickup Location -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pickupLocation" class="form-label text-black fw-light">Pickup Location</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control pickup-location" id="pickupLocation" placeholder="Enter pickup location">
+                                    <button class="btn btn-outline-secondary clearPickupBtn" type="button">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dropoff Location -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="dropoffLocation" class="form-label text-black fw-light">Dropoff Location</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control dropoff-location" id="dropoffLocation" placeholder="Enter dropoff location">
+                                    <button class="btn btn-outline-secondary clearDropoffBtn" type="button">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <!-- Date Selector -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="datePicker" class="form-label text-black fw-light">Select Date</label>
+                                <div class="input-group">
+                                    <!-- <span class="input-group-text" style="height: 55px;"> -->
+                                    <span class="input-group-text" >
+                                        <i class="bi bi-calendar"></i>
+                                    </span>
+                                    <input type="date" class="form-control" id="datePicker" placeholder="Today">
+                                    <!-- <mat-form-field class="example-full-width">
+                                        <mat-label>Choose a date</mat-label>
+                                        <input matInput [matDatepicker]="picker">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+                                      </mat-form-field>                                     -->
+                                      
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time Selector -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="timePicker" class="form-label text-black fw-light">Select Time</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-clock"></i>
+                                    </span>
+                                    <input type="time" class="form-control" id="timePicker" placeholder="Now">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col text-center">
+                            <a href="#" class="btn btn-primary">See Vichecle</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

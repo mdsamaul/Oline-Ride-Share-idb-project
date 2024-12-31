@@ -1,0 +1,127 @@
+*{
+    padding:0;
+    margin:0;
+}
+.mainConteiner{
+    width:100vw;
+    position:relative;
+    padding:0;
+}
+
+.entyPersonContainer{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.entyPersonBody {
+    width: 60%;
+    height: 60%;
+    background-color: aliceblue;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cardSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 250px;
+    height: 300px;
+    border-radius: 15px;
+    background: linear-gradient(to bottom, #6a11cb, #2575fc);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    margin: 10px;
+}
+
+    .card img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 5px solid white;
+    }
+
+
+.cardBtn {
+    color: floralwhite;
+    padding: 2px 10px 5px 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+
+    .cardBtn:hover {
+        border: 1px solid white;
+        color: white;
+        transform: scale(1.1);
+        transition: ease-in-out .5s;
+    }
+.closeSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top:40px;
+}
+.closeSectionBtn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: ease-in-out .5s;
+}
+.closeSectionBtn:hover{
+    background-color:red;
+    color:white;
+    transition:ease-in-out .5s;
+}
+
+#modCon {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modbod {
+    width: 80%;
+    max-height: 80vh;
+    background-color: white;
+    overflow: scroll;
+    scrollbar-width: none;
+    border-radius:10px;
+}

@@ -1,36 +1,52 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Oline_Ride_Share_idb_project.Server.Data;
-using Oline_Ride_Share_idb_project.Server.Hubs; // Add this namespace for SignalR Hub
+using Oline_Ride_Share_idb_project.Server.Hubs; 
 using Oline_Ride_Share_idb_project.Server.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
-
-// Register IHttpClientFactory
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<DistanceService>();  // Register DistanceService
-//builder.Services.AddScoped<FirebaseService>();  // Register FirebaseService
+builder.Services.AddScoped<DistanceService>(); 
+builder.Services.AddSignalR();
 
-// Register SignalR
-builder.Services.AddSignalR(); // Register SignalR services
+builder.Services.AddScoped<ITokenService, TokenService>(); 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+        };
+    });
 
-// Configure Swagger/OpenAPI
+var cString = builder.Configuration.GetConnectionString("vehicleApp");
+builder.Services.AddDbContext<DatabaseDbContext>(opt =>
+{
+    opt.UseSqlServer(cString);
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add database context with connection string
-var cString = builder.Configuration.GetConnectionString("vehicleApp");
-builder.Services.AddDbContext<DatabaseDbContext>(opt => { opt.UseSqlServer(cString); });
+builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IUserService, UserService>(); 
 
 var app = builder.Build();
 
-// Serve static files
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,13 +54,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
-// Map SignalR Hub
-app.MapHub<ChatHub>("/chatHub"); // Map the SignalR hub to the "/chatHub" route
+app.MapHub<ChatHub>("/chatHub"); 
 
-// Fallback for SPA routing
 app.MapFallbackToFile("/index.html");
 
 app.Run();
